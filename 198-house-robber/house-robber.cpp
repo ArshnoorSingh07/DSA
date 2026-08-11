@@ -4,7 +4,6 @@ public:
 
     int solve(int n, vector<int>&nums)
     {
-        if(n==0) return nums[0];
         dp[0] = nums[0];
         for(int i = 1; i< nums.size(); i++)
         {
