@@ -1,24 +1,26 @@
 class Solution {
 public:
-    int dp[100];
 
     int solve(int n, vector<int>&nums)
     {
-        dp[0] = nums[0];
+        int prev = nums[0];
+        int prev2 = 0;
         for(int i = 1; i< nums.size(); i++)
         {
+            int curri = 0;
             int pick = nums[i];
             if(i > 1){
-                pick+=dp[i-2];
+                pick+=prev2;
             }
-            int notpick = 0 + dp[i-1];
-            dp[i] = max(pick, notpick);
+            int notpick = 0 + prev;
+            curri = max(pick, notpick);
+            prev2 = prev;
+            prev = curri;
         }
-        return dp[n];
+        return prev;
     }
 
     int rob(vector<int>& nums) {
-        memset(dp,-1, sizeof(dp));
         int n = nums.size();
         return solve(n-1, nums);
     }
