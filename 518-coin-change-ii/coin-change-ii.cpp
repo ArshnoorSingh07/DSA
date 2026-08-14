@@ -20,11 +20,11 @@ public:
     }
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
-        vector<vector<int>>dp(n, vector<int>(amount+1,0));
+        vector<int>prev(amount+1,0), curr(amount+1,0);
 
         for(int tar = 0; tar <= amount; tar++) {
             if(tar % coins[0] == 0) {
-                dp[0][tar] = 1;
+                prev[tar] = 1;
             }
         }
 
@@ -32,14 +32,15 @@ public:
         {
             for(int tar = 0; tar<= amount; tar++)
             {
-                long long notTake = dp[ind-1][tar];
+                long long notTake = prev[tar];
                 long long take = 0;
                 if(coins[ind] <= tar){
-                    take = dp[ind][tar - coins[ind]];
+                    take = curr[tar - coins[ind]];
                 }
-                dp[ind][tar] = take + notTake;
+                curr[tar] = take + notTake;
             }
+            prev = curr;
         }
-        return dp[n-1][amount];
+        return prev[amount];
     }
 };
