@@ -17,9 +17,9 @@ public:
     int numDistinct(string s, string t) {
         int n = s.size();
         int m = t.size();
-        vector<unsigned long long>curr(m+1,0), prev(m+1,0);
+        vector<unsigned long long> prev(m+1,0);
         
-        prev[0] = curr[0] = 1;
+        prev[0] = 1;
 
         for(int i = 1; i<=n; i++)
         {
