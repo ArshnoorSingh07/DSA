@@ -1,20 +1,20 @@
 class Solution {
 public:
 
-    bool solve(int i, int j, string &s, string &p, vector<vector<int>>& dp)
+    bool solve(int i, int j, string &p, string &s, vector<vector<int>>& dp)
     {
-        // both string and pattern finished
+        // both pattern and string finished
         if(i == 0 && j == 0)
             return true;
 
         // pattern finished but string remains
-        if(j == 0 && i > 0)
+        if(i == 0 && j > 0)
             return false;
 
-        // string finished, pattern remains
-        if(i == 0 && j > 0)
+        // string finished but pattern remains
+        if(i > 0 && j == 0)
         {
-            for(int k = 1; k <= j; k++)
+            for(int k = 1; k <= i; k++)
             {
                 if(p[k-1] != '*')
                     return false;
@@ -25,29 +25,29 @@ public:
         if(dp[i][j] != -1)
             return dp[i][j];
 
-        // normal character or '?'
-        if(s[i-1] == p[j-1] || p[j-1] == '?')
+        // character match or '?'
+        if(p[i-1] == s[j-1] || p[i-1] == '?')
         {
-            return dp[i][j] = solve(i-1, j-1, s, p, dp);
+            return dp[i][j] = solve(i-1, j-1, p, s, dp);
         }
 
-        // '*'
-        if(p[j-1] == '*')
+        // '*' case
+        if(p[i-1] == '*')
         {
             return dp[i][j] =
-                solve(i, j-1, s, p, dp) ||   // '*' matches empty
-                solve(i-1, j, s, p, dp);     // '*' matches a character
+                solve(i-1, j, p, s, dp) ||   // '*' matches empty
+                solve(i, j-1, p, s, dp);     // '*' matches one/more chars
         }
 
         return dp[i][j] = false;
     }
 
     bool isMatch(string s, string p) {
-        int n = s.size();
-        int m = p.size();
+        int n = p.size();
+        int m = s.size();
 
         vector<vector<int>> dp(n+1, vector<int>(m+1, -1));
 
-        return solve(n, m, s, p, dp);
+        return solve(n, m, p, s, dp);
     }
 };
