@@ -36,8 +36,6 @@ public:
             temp.push_back(nums[last]);
         }
 
-        reverse(temp.begin(), temp.end());
-
         return temp;
     }
 };
