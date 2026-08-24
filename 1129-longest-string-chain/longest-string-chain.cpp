@@ -35,7 +35,7 @@ public:
             for(int j = 0; j< i; j++)
             {
                 if(checkPossible(words[i], words[j]) && dp[j] + 1 > dp[i]){
-                    dp[i] = dp[j] + 1;
+                    dp[i] = dp[j] + 1; 
                 }
             }
             maxi = max(maxi, dp[i]);
