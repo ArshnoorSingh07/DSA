@@ -10,7 +10,6 @@ public:
 
         string ans;
 
-        // First try to match target exactly
         for(int i = 0; i < n; i++) {
             int ch = target[i] - 'a';
 
@@ -19,8 +18,6 @@ public:
                 freq[ch]--;
             }
             else {
-                // Cannot continue equality
-                // Try smallest character greater than target[i]
                 for(int c = ch + 1; c < 26; c++) {
                     if(freq[c] > 0) {
                         ans.push_back('a' + c);
@@ -37,7 +34,6 @@ public:
                     }
                 }
 
-                // Need to backtrack
                 while(i > 0) {
                     i--;
 
@@ -69,8 +65,6 @@ public:
             }
         }
 
-        // Exact target formed, but answer must be strictly greater.
-        // Backtrack and increase one position.
         for(int i = n - 1; i >= 0; i--) {
             char prev = ans.back();
             ans.pop_back();
