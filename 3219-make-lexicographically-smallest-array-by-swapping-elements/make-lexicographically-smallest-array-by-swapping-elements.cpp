@@ -18,7 +18,6 @@ public:
         while(i < n) {
             int j = i;
 
-            // Find all values belonging to the same swappable group
             while(j + 1 < n &&
                   arr[j + 1].first - arr[j].first <= limit) {
                 j++;
@@ -32,7 +31,6 @@ public:
 
             sort(indices.begin(), indices.end());
 
-            // arr[i...j] values are already sorted
             for(int k = 0; k < indices.size(); k++) {
                 ans[indices[k]] = arr[i + k].first;
             }
