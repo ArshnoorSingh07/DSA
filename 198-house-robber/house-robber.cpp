@@ -27,7 +27,7 @@ public:
         for(int i = 1; i<n; i++){
             int pick = nums[i];
             if(i > 1)
-                pick += dp[i-2];
+                pick +=  dp[i-2];
             int notPick = 0 + dp[i-1];
             dp[i] = max(pick, notPick);
         }
