@@ -8,6 +8,8 @@ public:
         vector<vector<int>>vis(n, vector<int>(m,0));
         queue<pair<pair<int, int>,int>>q;
 
+        int cntFresh = 0;
+
         for(int row = 0; row<n; row++)
         {
             for(int col = 0; col < m; col++)
@@ -18,12 +20,14 @@ public:
                 }else{
                     vis[row][col] = 0;
                 }
+                if(grid[row][col] == 1) cntFresh++;
             }
         }
 
         int delrow[] = {-1, 1, 0, 0};
         int delcol[] = {0, 0, +1, -1};
         int tm = 0;
+        int cnt= 0;
         while(!q.empty())
         {
             int r = q.front().first.first;
@@ -40,18 +44,23 @@ public:
                 {
                     q.push({{nrow, ncol}, t+1});
                     vis[nrow][ncol] = 2;
+                    cnt++;
                 }
             }
         }
 
-        for(int i = 0; i<n; i++){
-            for(int j = 0; j<m; j++)
-            {
-                if(grid[i][j] == 1 && vis[i][j] != 2){
-                    return -1;
-                }
-            }
+        if(cnt != cntFresh){
+            return -1;
         }
+
+        // for(int i = 0; i<n; i++){
+        //     for(int j = 0; j<m; j++)
+        //     {
+        //         if(grid[i][j] == 1 && vis[i][j] != 2){
+        //             return -1;
+        //         }
+        //     }
+        // }
 
         return tm;
 
