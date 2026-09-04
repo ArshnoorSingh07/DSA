@@ -1,44 +1,37 @@
 class Solution {
 public:
-    int solve(int ind, int s, vector<int>&arr,vector<vector<int>>&dp)
-    {
-        if(ind == 0){
-            if(s == 0 && arr[0] == 0){
-                return 2;
-            }
-            if(s==0 || arr[0] == s){
-                return 1;
-            }
-            return 0;
-        }
-        
-        if(dp[ind][s] != -1) return dp[ind][s];
-
-        int notTake = solve(ind-1,s,arr,dp);
-        int take = 0;
-        if(arr[ind] <= s){
-            take = solve(ind - 1, s- arr[ind], arr, dp);
-        }
-        return dp[ind][s] = take + notTake;
-    }
-
-    int findWays(vector<int>&arr, int target){
-        int n = arr.size();
-        vector<vector<int>>dp(n, vector<int>(target+1,-1));
-        return solve(n-1, target, arr, dp);
-    }
-
-    int countPartitions(int n, int d, vector<int>&arr){
-        int totSum = 0;
-        for(auto &it:arr){
-            totSum += it;
-        }
-        if(totSum - d  < 0 || (totSum-d) % 2 != 0) return 0;
-        return findWays(arr, (totSum - d)/2);
-    }
-
+    
     int findTargetSumWays(vector<int>& nums, int target) {
         int n = nums.size();
-        return countPartitions(n, target, nums);
+
+        // First calculate the total sum of all numbers
+        int totalSum = accumulate(nums.begin(), nums.end(), 0);
+
+        // If (target + totalSum) is odd or target > totalSum, no valid partition exists
+        if ((totalSum + target) % 2 != 0 || abs(target) > totalSum) return 0;
+
+        // We now need to count subsets with sum = (target + totalSum) / 2
+        int newTarget = (totalSum + target) / 2;
+
+        // Create DP table: dp[i][j] = number of ways to make sum j using first i numbers
+        vector<vector<int>> dp(n + 1, vector<int>(newTarget + 1, 0));
+
+        // Base case: One way to form sum 0 (by taking no elements)
+        for (int i = 0; i <= n; i++) dp[i][0] = 1;
+
+        // Fill DP table iteratively
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= newTarget; j++) {
+                // Exclude current element
+                dp[i][j] = dp[i - 1][j];
+
+                // Include current element if it does not exceed current target j
+                if (nums[i - 1] <= j) {
+                    dp[i][j] += dp[i - 1][j - nums[i - 1]];
+                }
+            }
+        }
+
+        return dp[n][newTarget];
     }
 };
