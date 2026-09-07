@@ -6,7 +6,7 @@ public:
             int u = edge[0];
             int v = edge[1];
 
-            adj[u].push_back(v);
+            adj[v].push_back(u);
         }
 
         vector<int>indegree(numCourses,0);
@@ -42,7 +42,6 @@ public:
 
         }
 
-        reverse(ans.begin(), ans.end());
 
         if(ans.size() == numCourses) return ans;
         else return {};
