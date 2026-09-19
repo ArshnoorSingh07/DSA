@@ -1,5 +1,5 @@
 # Write your MySQL query statement below
-SELECT w1.id from weather w1
-    JOIN weather w2
-    ON DATEDIFF(w1.recordDate, w2.recordDate) = 1
-    where w1.temperature > w2.temperature;
+select t1.id from weather t1
+    JOIN weather t2
+    ON DATEDIFF(t1.recordDate, t2.recordDate) = 1
+    where t1.temperature > t2.temperature;
