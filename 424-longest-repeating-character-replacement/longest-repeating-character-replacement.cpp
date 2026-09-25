@@ -11,7 +11,7 @@ public:
             mpp[s[r] - 'A']++;
             maxFreq = max(maxFreq, mpp[s[r]-'A']);
 
-            while((r-l+1) - maxFreq > k){
+            if((r-l+1) - maxFreq > k){
                 mpp[s[l] - 'A']--;
                 l++;
             }
