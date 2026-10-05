@@ -20,4 +20,5 @@ public:
 
         return st.top();
     }
-};
+}
+;
