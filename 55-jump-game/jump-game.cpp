@@ -22,7 +22,24 @@ public:
     }
     bool canJump(vector<int>& nums) {
         int n = nums.size();
-        vector<int>dp(n,-1);
-        return solve(0, nums,dp);
+        int farthest = 0;
+        for(int i = 0; i<n; i++){
+            if(i > farthest){
+                return false;
+            }
+
+            int jump = i + nums[i];
+            farthest = max(farthest, jump);
+
+            if(i >= n-1){
+                return true;
+            }
+            
+        }
+
+        return true;
+        
+        // vector<int>dp(n,-1);
+        // return solve(0, nums,dp);
     }
 };
