@@ -27,7 +27,32 @@ public:
     }
     int jump(vector<int>& nums) {
         int n = nums.size();
-        vector<int>dp(n,-1);
-        return solve(0, nums,dp);
+        int farthest = 0;
+        int jumps = 0;
+        int currIndex = 0;
+
+        for(int i = 0; i<n; i++){
+            if(i >= n-1){
+                break;
+            }
+
+            farthest = max(farthest, i + nums[i]);
+
+
+            if(i == currIndex){
+                
+                jumps++;
+                currIndex = farthest;
+                
+                if(i >= n-1){
+                    break;
+                }
+            }
+        }
+
+        return jumps;
+
+        // vector<int>dp(n,-1);
+        // return solve(0, nums,dp);
     }
 };
