@@ -1,17 +1,28 @@
 class Solution {
 public:
-    bool canJump(vector<int>& nums) {
+    bool solve(int ind, vector<int>&nums,vector<int>&dp)
+    {
         int n = nums.size();
-        int maxIdx = 0;
-        for(int i= 0; i<n;i++)
-        {
-            if(i > maxIdx){
-                return false;
-            }
-            if(nums[i] + i > maxIdx){
-                maxIdx = nums[i] + i;
+        if(ind >= n-1){
+            return true;
+        }
+        if(dp[ind] != -1){
+            return dp[ind];
+        }
+
+        int farthest = min(n-1, ind + nums[ind]);
+
+        for(int i = ind+1; i <= farthest; i++){
+            if(solve(i,nums,dp)){
+                return dp[ind] = true;
             }
         }
-        return true;
+
+        return dp[ind] = false;
+    }
+    bool canJump(vector<int>& nums) {
+        int n = nums.size();
+        vector<int>dp(n,-1);
+        return solve(0, nums,dp);
     }
 };
